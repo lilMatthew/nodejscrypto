@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Encryption Demo</title>
+</head>
+<body>
+    <h1>AES Encryption and Decryption Demo</h1>
+    <form id="encryptionForm">
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" required>
+        <br>
+        <label for="key">Key (32, 48, hoặc 64 hex ký tự):</label>
+        <input type="text" id="key" name="key" required>
+        <button type="button" onclick="generateKey()">Generate Random Key</button>
+        <br>
+        <button type="button" onclick="encryptMessage()">Encrypt</button>
+        <button type="button" onclick="decryptMessage()">Decrypt</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        async function generateKey() {
+            const response = await fetch('/generate-key');
+            const data = await response.json();
+            document.getElementById('key').value = data.key;
+        }
+
+        async function encryptMessage() {
+            const message = document.getElementById('message').value;
+            const key = document.getElementById('key').value;
+
+            if (![32, 48, 64].includes(key.length)) {
+                alert('Key must be 32, 48, or 64 hex characters long.');
+                return;
+            }
+
+            const response = await fetch('/encrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message, key })
+            });
+
+            const data = await response.json();
+            console.log('Encrypted data:', data);
+            document.getElementById('result').innerText = `Encrypted Message: ${data.encryptedMessage}`;
+        }
+
+        async function decryptMessage() {
+            const message = document.getElementById('result').innerText.replace('Encrypted Message: ', '');
+            const key = document.getElementById('key').value;
+
+            if (![32, 48, 64].includes(key.length)) {
+                alert('Key must be 32, 48, or 64 hex characters long.');
+                return;
+            }
+
+            const response = await fetch('/decrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message, key })
+            });
+
+            const data = await response.json();
+            console.log('Decrypted data:', data);
+            document.getElementById('result').innerText = `Decrypted Message: ${data.decryptedMessage}`;
+        }
+    </script>
+</body>
+</html>
