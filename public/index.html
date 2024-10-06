@@ -6,17 +6,17 @@
     <title>AES Encryption Demo</title>
 </head>
 <body>
-    <h1>AES Encryption and Decryption Demo</h1>
+    <h1>AES Encryption and Decryption Demo Using NodeJS</h1>
     <form id="encryptionForm">
         <label for="message">Message:</label>
         <input type="text" id="message" name="message" required>
         <br>
         <label for="key">Key (32, 48, hoặc 64 hex ký tự):</label>
         <input type="text" id="key" name="key" required>
-        <button type="button" onclick="generateKey()">Generate Random Key</button>
+        <button type="button" onclick="generateKey()">Sinh khóa ngẫu nhiên</button>
         <br>
-        <button type="button" onclick="encryptMessage()">Encrypt</button>
-        <button type="button" onclick="decryptMessage()">Decrypt</button>
+        <button type="button" onclick="encryptMessage()">Mã hóa</button>
+        <button type="button" onclick="decryptMessage()">Giải mã</button>
     </form>
     <p id="result"></p>
 
