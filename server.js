@@ -15,13 +15,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Endpoint để sinh khóa ngẫu nhiên
-// app.get('/generate-key', (req, res) => {
-//     const keyLength = 32; 
-//     const randomKey = crypto.randomBytes(keyLength).toString('hex');
-    
-//     res.json({ key: randomKey });
-// });
+// Tạo khóa
 app.get('/generate-key', (req, res) => {
     const keyLength = 32; 
     const randomKey = crypto.randomBytes(keyLength).toString('hex');
