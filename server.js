@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const crypto = require('crypto');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -15,11 +16,26 @@ app.get('/', (req, res) => {
 });
 
 // Endpoint để sinh khóa ngẫu nhiên
+// app.get('/generate-key', (req, res) => {
+//     const keyLength = 32; 
+//     const randomKey = crypto.randomBytes(keyLength).toString('hex');
+    
+//     res.json({ key: randomKey });
+// });
 app.get('/generate-key', (req, res) => {
     const keyLength = 32; 
     const randomKey = crypto.randomBytes(keyLength).toString('hex');
-    res.json({ key: randomKey });
+    
+    // Lưu khóa vào file key.txt
+    fs.writeFile('key.txt', randomKey, (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to save key to file' });
+        }
+        res.json({ key: randomKey });
+    });
 });
+
+
 
 app.post('/encrypt', async (req, res) => {
     const { message, key } = req.body;
