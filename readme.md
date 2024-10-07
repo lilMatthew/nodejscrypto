@@ -1,5 +1,5 @@
 1. Sử dụng Nodejs -  https://nodejs.org/en/download/package-manager
-2. Mở terminal IDE -> npm i crypto-js
+2. Mở terminal IDE -> npm i crypto-js, cài Express npm install express body-parser
 3. Run code server.js
 
 Cách hoạt động 
